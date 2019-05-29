@@ -1,8 +1,11 @@
 package GL.sdpWebDriver;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -12,15 +15,18 @@ import org.openqa.selenium.interactions.Actions;
 
 public class DriverSkyScanner {
 
-	public static void main(String[] args)  throws InterruptedException {
+	@Test
+	public void SkyScannerTest()  throws InterruptedException {
 		// TODO Auto-generated method stub
 		int implicityWaitingTime=5;
-		String baseURL="https://www.google.com/";
+		//String baseURL="https://www.google.com/";
 		String skyScanner= "https://www.skyscanner.pl/";
 		System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
 		ChromeOptions chromeOptions = new ChromeOptions();
 		chromeOptions.setHeadless(false);
 		WebDriver driver=new ChromeDriver(chromeOptions);
+		driver.manage().window().maximize();
+		driver.manage().deleteAllCookies();
 		driver.manage().timeouts().implicitlyWait(implicityWaitingTime, TimeUnit.SECONDS);
 		
 		driver.get(skyScanner);
@@ -92,7 +98,10 @@ public class DriverSkyScanner {
 		
 		szukaj.click();
 		
-		Thread.sleep(3000);// żeby zobaczyć czy naciśnięty
+		//potwierdzenie ale nie zadziała bo pojawia się captcha :(
+		assertEquals("Tanie loty z Berlin do Warszawa w serwisie Skyscanner",driver.getTitle());
+		
+		//Thread.sleep(3000);// żeby zobaczyć czy naciśnięty
 		driver.close();
 		driver.quit();
 		
